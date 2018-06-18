@@ -6,7 +6,24 @@ import { connect } from 'react-redux'
 import styled from 'styled-components'
 import FreeScrollBar from 'react-free-scrollbar'
 import { LaneList } from '../components/Boards/laneList'
+import logo from '../images/logo.png'
 
+const Root = styled.div`
+  height: 100vh;
+  background-color: #4c63f7;
+`
+const Logo = styled.img`
+  width: 110px;
+  height: auto;
+  margin-left: auto;
+  margin-right: auto;
+  padding-top: 27px;
+  display: block;
+`
+const Header = styled.header`
+  background-color: black;
+  height: 90px;
+`
 class HomePage extends Component {
   state = {
     boardName: '',
@@ -32,8 +49,11 @@ class HomePage extends Component {
 
   render() {
     return (
-      <div>
-        <p>Add new Board</p>
+      <Root>
+        <Header>
+          <Logo src={logo} alt="Logo" />
+        </Header>
+        <br />
         <input
           value={this.state.boardName}
           onChange={this.handleChange}
@@ -44,7 +64,7 @@ class HomePage extends Component {
           boards={this.props.boards}
           handleDeleteBoard={this.handleDeleteBoard}
         />
-      </div>
+      </Root>
     )
   }
 }

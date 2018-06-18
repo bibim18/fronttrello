@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { addCard } from '../../actions/homeAction'
+import { Button } from 'reactstrap'
 
 //const AddCard = (props) => {
 class AddCard extends Component {
@@ -25,8 +26,12 @@ class AddCard extends Component {
           placeholder="Add Card Title"
         />
         <br />
-        <button onClick={this.handleClickSaveCard}>SAVE</button>
-        <button onClick={this.props.handdleCancleAdd}>CANCLE</button>
+        <Button color="info" onClick={this.handleClickSaveCard}>
+          save
+        </Button>
+        <Button color="danger" onClick={this.props.handdleCancleAdd}>
+          cancle
+        </Button>
       </div>
     )
   }

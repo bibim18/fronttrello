@@ -4,13 +4,13 @@ import del from '../../images/del.png'
 import AddCard from './Addcard'
 import Card from './card'
 import { deleteBoard, delCard } from '../../actions/homeAction'
-
+import { Button } from 'reactstrap'
 import { connect } from 'react-redux'
 
 const Square = styled.div`
   width: 270px;
   display: inline-block;
-  height: 810px;
+  height: 800px;
   overflow: hidden;
   min-height: 50px;
   background-color: #e2e4e6;
@@ -22,11 +22,13 @@ const Square = styled.div`
   vertical-align: top;
 `
 const Body = styled.article`
-  width: 240px;
-  height: 715px;
+  width: 245px;
+  height: 670px;
   background-color: #e2e4e6;
   top: 110px;
   margin-left: 15px;
+  overflow-y: scroll;
+  overflow-x: hidden;
 `
 
 const Header = styled.header`
@@ -36,17 +38,17 @@ const Header = styled.header`
   margin-top: 10px;
 `
 const Footer = styled.footer`
+  margin-top: 10px
   width: 270px;
-  height: 50px;
+  height: 40px;
   text-align: center;
   margin-bottom: 10px;
 `
 
-const Del = styled.img`
+const Del = styled.div`
   float: right;
-  width: 20px;
-  hight: 20px;
   margin-right: 20px;
+  margin-top: 0px;
 `
 class Lane extends Component {
   state = {
@@ -78,11 +80,16 @@ class Lane extends Component {
       <Square>
         <Header>
           {this.props.board.title}
-          <a
-            onClick={e => this.props.handleDeleteBoard(e, this.props.board._id)}
-          >
-            <Del src={del} alt="Delete Button" />
-          </a>
+          <Del>
+            <Button
+              color="danger"
+              onClick={e =>
+                this.props.handleDeleteBoard(e, this.props.board._id)
+              }
+            >
+              Del
+            </Button>
+          </Del>
         </Header>
         <Body>{cardinfo}</Body>
         <Footer>
@@ -92,7 +99,10 @@ class Lane extends Component {
               _laneid={this.props.board._id}
             />
           ) : (
-            <button onClick={this.handdleClickAdd}>ADD CARD</button>
+            <Button color="success" onClick={this.handdleClickAdd}>
+              {' '}
+              + ADD A CARD{' '}
+            </Button>
           )}
         </Footer>
       </Square>
