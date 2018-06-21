@@ -12,7 +12,12 @@ import {
   ModalHeader,
   ModalBody,
   ModalFooter,
+  Table,
 } from 'reactstrap'
+import FontAwesomeIcon from '@fortawesome/react-fontawesome'
+import faList from '@fortawesome/fontawesome-free-solid/faList'
+import { ModalCard } from './modal'
+
 const Del = styled.div`
   float: right;
   width: 10px;
@@ -22,8 +27,28 @@ const Del = styled.div`
 const CardApply = styled(Card)`
   .card-body {
     flex: 1 1 auto;
-    padding: 0.25rem;
+    padding: 0.1rem;
     width: 215px;
+    white-space: normal;
+    word-wrap: break-word;
+  }
+  &:hover {
+    background-color: #cfd3eb;
+    .btn-secondary {
+      color: #cfd3eb;
+      background-color: #cfd3eb;
+      border-color: #cfd3eb;
+    }
+  }
+`
+const ButtonApply = styled(Button)`
+  color: #fff;
+  background-color: #fff;
+  border-color: #fff;
+  &:hover {
+    color: #fff !important;
+    border-color: #fff !important;
+    background-color: #8c8e9a !important;
   }
 `
 
@@ -32,15 +57,39 @@ class card extends Component {
     super(props)
     this.state = {
       modal: false,
+      descriptionedit: true,
+      title: this.props.card.cardTitle,
+      des: this.props.card.description,
+      att: this.props.card.attachment,
+      com: this.props.card.comment,
     }
-
     this.toggle = this.toggle.bind(this)
   }
+  handleEditDes = () => {
+    this.setState({ descriptionedit: !this.state.descriptionedit })
+  }
 
-  toggle() {
+  toggle = e => {
     this.setState({
       modal: !this.state.modal,
     })
+  }
+  handleSave = e => {
+    this.props.handleEdit(
+      e,
+      this.props.card._id,
+      this.state.title,
+      this.state.des,
+      this.state.att,
+      this.state.com
+    )
+  }
+  handleChange = (field, e) => {
+    this.setState({ [field]: e.target.value })
+  }
+  twiceFunction = e => {
+    this.handleSave(e)
+    this.toggle(e)
   }
   render() {
     return (
@@ -51,7 +100,7 @@ class card extends Component {
             <CardTitle>
               {this.props.card.cardTitle}
               <Del>
-                <Button
+                <ButtonApply
                   onClick={e =>
                     this.props.handleDelete(
                       e,
@@ -61,35 +110,25 @@ class card extends Component {
                   }
                 >
                   X
-                </Button>
+                </ButtonApply>
               </Del>
             </CardTitle>
           </CardBody>
         </CardApply>
-        <Modal
-          isOpen={this.state.modal}
+
+        <ModalCard
+          card={this.props.card}
+          board={this.props.board}
+          handleChange={this.handleChange}
           toggle={this.toggle}
-          className={this.props.className}
-        >
-          <ModalHeader toggle={this.toggle}>
-            {this.props.card.cardTitle}
-          </ModalHeader>
-          <ModalBody>
-            Description: {this.props.card.description}
-            <br />
-            Attachments: {this.props.card.attachment}
-            <br />
-            Add Comment: {this.props.card.comment}
-          </ModalBody>
-          <ModalFooter>
-            <Button color="primary" onClick={this.toggle}>
-              Do Something
-            </Button>{' '}
-            <Button color="secondary" onClick={this.toggle}>
-              Cancel
-            </Button>
-          </ModalFooter>
-        </Modal>
+          twiceFunction={this.twiceFunction}
+          modalopen={this.state.modal}
+          des={this.state.des}
+          att={this.state.att}
+          com={this.state.com}
+          descriptionedit={this.state.descriptionedit}
+          handleEditDes={this.handleEditDes}
+        />
       </div>
     )
   }

@@ -18,6 +18,7 @@ class AddCard extends Component {
     this.setState({ isHaveCard: false })
   }
   render() {
+    console.log('props in addcard ', this.props)
     return (
       <div align="center">
         <input

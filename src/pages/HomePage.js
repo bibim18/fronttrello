@@ -25,10 +25,6 @@ const Header = styled.header`
   height: 90px;
 `
 class HomePage extends Component {
-  state = {
-    boardName: '',
-  }
-
   componentDidMount() {
     this.props.getShowBoard()
   }
@@ -38,31 +34,17 @@ class HomePage extends Component {
     this.props.handleDelete(id)
   }
 
-  handleChange = e => {
-    this.setState({ boardName: e.target.value })
-  }
-
-  handleClick = () => {
-    this.props.handleAddBoard(this.state.boardName)
-    this.setState({ boardName: '' })
-  }
-
   render() {
+    console.log('props in homepage ', this.props)
     return (
       <Root>
         <Header>
           <Logo src={logo} alt="Logo" />
         </Header>
-        <br />
-        <input
-          value={this.state.boardName}
-          onChange={this.handleChange}
-          placeholder="Add your title"
-        />
-        <button onClick={this.handleClick}>Add</button>
         <LaneList
           boards={this.props.boards}
           handleDeleteBoard={this.handleDeleteBoard}
+          handleAddBoard={this.props.handleAddBoard}
         />
       </Root>
     )

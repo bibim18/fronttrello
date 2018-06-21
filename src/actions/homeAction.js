@@ -45,7 +45,7 @@ const addCard = (id, text) => {
 const delCard = (laneid, cardid) => {
   return function(dispatch) {
     const data = { laneid, cardid }
-    axios.delete(`${apiURL}lane/${laneid}/${cardid}`, data).then(response => {
+    axios.delete(`${apiURL}lane/${laneid}/${cardid}`).then(response => {
       dispatch({
         type: 'DELETE_CARD',
         payload: response.data,
@@ -54,4 +54,21 @@ const delCard = (laneid, cardid) => {
   }
 }
 
-export { addBoard, deleteBoard, showBoard, addCard, delCard }
+const editCard = (id, cardTitle, description, attachment, comment) => {
+  return function(dispatch) {
+    const data = { cardTitle, description, attachment, comment }
+    axios.patch(`${apiURL}card/${id}`, data).then(response => {
+      console.log(response)
+      dispatch({
+        type: 'EDIT_CARD',
+        payload: response.data,
+      })
+    })
+  }
+}
+
+const addname = text => {
+  return
+}
+
+export { addBoard, deleteBoard, showBoard, addCard, delCard, editCard }

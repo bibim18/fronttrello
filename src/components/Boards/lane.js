@@ -3,14 +3,13 @@ import styled from 'styled-components'
 import del from '../../images/del.png'
 import AddCard from './Addcard'
 import Card from './card'
-import { deleteBoard, delCard } from '../../actions/homeAction'
+import { deleteBoard, delCard, editCard } from '../../actions/homeAction'
 import { Button } from 'reactstrap'
 import { connect } from 'react-redux'
 
 const Square = styled.div`
   width: 270px;
   display: inline-block;
-  height: 800px;
   overflow: hidden;
   min-height: 50px;
   background-color: #e2e4e6;
@@ -23,9 +22,9 @@ const Square = styled.div`
 `
 const Body = styled.article`
   width: 245px;
-  height: 670px;
   background-color: #e2e4e6;
   top: 110px;
+  max-height: 700px;
   margin-left: 15px;
   overflow-y: scroll;
   overflow-x: hidden;
@@ -40,7 +39,7 @@ const Header = styled.header`
 const Footer = styled.footer`
   margin-top: 10px
   width: 270px;
-  height: 40px;
+  height: 60px;
   text-align: center;
   margin-bottom: 10px;
 `
@@ -65,6 +64,10 @@ class Lane extends Component {
     e.stopPropagation()
     this.props.handleDeleteCard(laneid, cardid)
   }
+  handleEdit = (e, id, title, des, att, com) => {
+    e.stopPropagation()
+    this.props.getEdit(id, title, des, att, com)
+  }
 
   render() {
     const cardinfo = this.props.board.card_info.map(card => (
@@ -73,6 +76,7 @@ class Lane extends Component {
         card={card}
         board={this.props.board}
         handleDelete={this.handleDelete}
+        handleEdit={this.handleEdit}
       />
     ))
 
@@ -117,6 +121,9 @@ const mapDispatchToProps = dispatch => {
     },
     handleDeleteCard: (laneid, cardid) => {
       dispatch(delCard(laneid, cardid))
+    },
+    getEdit: (id, title, des, att, com) => {
+      dispatch(editCard(id, title, des, att, com))
     },
   }
 }

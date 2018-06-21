@@ -1,5 +1,6 @@
 const INITIAL_STATE = {
   boards: [],
+  boardName: '',
 }
 //reducer เป็นฟังก์ชั่นที่รับพารามิเตอร์สองตัว คือ stateก่อนหน้า (previous state) และ action
 const homes = (state = INITIAL_STATE, action) => {
@@ -15,6 +16,8 @@ const homes = (state = INITIAL_STATE, action) => {
     case 'ADD_CARD':
       return { ...state, boards: action.payload }
     case 'DELETE_CARD':
+      return { ...state, boards: action.payload }
+    case 'EDIT_CARD':
       return { ...state, boards: action.payload }
     default:
       return state //return state ตัวเดิมที่ส่งเข้ามา
