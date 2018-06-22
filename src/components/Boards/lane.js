@@ -6,6 +6,12 @@ import Card from './card'
 import { deleteBoard, delCard, editCard } from '../../actions/homeAction'
 import { Button } from 'reactstrap'
 import { connect } from 'react-redux'
+import { SortablePane, Pane } from 'react-sortable-pane'
+
+type State = {
+  order: string[],
+  panes: { [key: string]: { height: number } },
+}
 
 const Square = styled.div`
   width: 270px;
@@ -52,6 +58,8 @@ const Del = styled.div`
 class Lane extends Component {
   state = {
     isHaveCard: false,
+    order: ['2', '0', '1'],
+    panes: { '0': { height: 100 }, '1': { height: 100 }, '2': { height: 100 } },
   }
 
   handdleClickAdd = () => {
@@ -70,6 +78,15 @@ class Lane extends Component {
   }
 
   render() {
+    console.log()
+    const panes = [0, 1, 2].map(key => (
+      <Pane
+        key={key}
+        size={{ width: '100%', height: this.state.panes[key].height }}
+      >
+        00{key}
+      </Pane>
+    ))
     const cardinfo = this.props.board.card_info.map(card => (
       <Card
         key={card._id}
@@ -95,7 +112,28 @@ class Lane extends Component {
             </Button>
           </Del>
         </Header>
-        <Body>{cardinfo}</Body>
+        {/* <Body>{cardinfo}</Body> */}
+        <Body>
+          {cardinfo}
+          <SortablePane
+            direction="vertical"
+            margin={20}
+            order={this.state.order}
+            onOrderChange={order => {
+              this.setState({ order })
+            }}
+            onResizeStop={(e, key, dir, ref, d) => {
+              this.setState({
+                panes: {
+                  ...this.state.panes,
+                  [key]: { height: this.state.panes[key].height + d.height },
+                },
+              })
+            }}
+          >
+            {panes}
+          </SortablePane>
+        </Body>
         <Footer>
           {this.state.isHaveCard ? (
             <AddCard
