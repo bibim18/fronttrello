@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import Lane from './lane'
+import Board from './laneContainer'
 import styled from 'styled-components'
 
 const Square = styled.div`
@@ -13,7 +13,7 @@ const Square = styled.div`
   border-radius: 3px;
   padding-top: 10px;
   padding-bottom: 10px;
-  padding-left: 10px;
+  padding-left: 5px;
   margin-top: 10px;
   vertical-align: top;
 `
@@ -39,11 +39,11 @@ class LaneList extends Component {
     this.setState({ boardName: '' })
   }
   render() {
-    console.log('props in lanelist  ', this.props)
-    const lanes = this.props.boards.map(board => (
-      <Lane
+    const lanes = this.props.boards.map((board, idx) => (
+      <Board
         key={board._id}
         board={board}
+        index={idx}
         handleDeleteBoard={this.props.handleDeleteBoard}
       />
     )) //ไม่ต้องใส่ index เพราะมันวนจาก index ให้อยู่แล้ว

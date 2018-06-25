@@ -1,12 +1,12 @@
 import React, { Component } from 'react'
 import HeaderBar from '../components/HeaderBar'
 import { addBoard, showBoard, deleteBoard } from '../actions/homeAction'
-import { addCard } from '../actions/cardAction'
 import { connect } from 'react-redux'
 import styled from 'styled-components'
-import FreeScrollBar from 'react-free-scrollbar'
-import { LaneList } from '../components/Boards/laneList'
+import { LaneList } from '../components/Boards/Lane/laneList'
 import logo from '../images/logo.png'
+import HTML5Backend from 'react-dnd-html5-backend'
+import { DragDropContext } from 'react-dnd'
 
 const Root = styled.div`
   height: 100vh;
@@ -35,7 +35,6 @@ class HomePage extends Component {
   }
 
   render() {
-    console.log('props in homepage ', this.props)
     return (
       <Root>
         <Header>
@@ -67,7 +66,9 @@ const mapStateToProps = state => {
   return { boards: state.homes.boards }
 }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(HomePage)
+export default DragDropContext(HTML5Backend)(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(HomePage)
+)

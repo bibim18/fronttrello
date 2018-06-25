@@ -19,6 +19,8 @@ const homes = (state = INITIAL_STATE, action) => {
       return { ...state, boards: action.payload }
     case 'EDIT_CARD':
       return { ...state, boards: action.payload }
+    case 'MOVE_BOARD':
+      return { ...state, boards: action.payload }
     default:
       return state //return state ตัวเดิมที่ส่งเข้ามา
   }

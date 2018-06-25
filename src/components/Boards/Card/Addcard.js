@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { addCard } from '../../actions/homeAction'
+import { addCard } from '../../../actions/homeAction'
 import { Button } from 'reactstrap'
 
 //const AddCard = (props) => {

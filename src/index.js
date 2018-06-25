@@ -19,10 +19,15 @@ ReactDOM.render(
 )
 registerServiceWorker()
 
-//ทุกครั้งที่แก้อะไรใน app มันจะดูว่าจริงๆแก้อะไรไปบ้าง ก็จะ refresh แค่ส่วนนั้นให้เลย
-// if (module.hot) {
-//   module.hot.accept('./App', () => {
-//     const NextApp = require('./App').default
-//     ReactDOM.render(<NextApp />, document.getElementById('root'))
-//   })
-// }
+// ทุกครั้งที่แก้อะไรใน app มันจะดูว่าจริงๆแก้อะไรไปบ้าง ก็จะ refresh แค่ส่วนนั้นให้เลย
+if (module.hot) {
+  module.hot.accept('./App', () => {
+    const NextApp = require('./App').default
+    ReactDOM.render(
+      <Provider store={store}>
+        <NextApp />
+      </Provider>,
+      document.getElementById('root')
+    )
+  })
+}
