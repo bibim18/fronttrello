@@ -66,7 +66,6 @@ class Lane extends Component {
   }
 
   render() {
-    console.log('props ', this.props)
     const {
       connectDragPreview,
       connectDropTarget,

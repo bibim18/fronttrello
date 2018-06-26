@@ -12,7 +12,7 @@ import {
   ModalFooter,
   Table,
 } from 'reactstrap'
-import ImageUploader from 'react-images-upload'
+import { UploadFile } from './uploadFile'
 
 const TT = styled.div`
   font-size: 14px;
@@ -22,6 +22,7 @@ const ButtonApply = styled(Button)`
 `
 
 export const ModalCard = props => {
+  console.log(props)
   return (
     <Modal
       isOpen={props.modalopen}
@@ -61,13 +62,24 @@ export const ModalCard = props => {
               <td>
                 <FontAwesomeIcon icon={faPlusCircle} /> Attachmentsy{' '}
               </td>
-              <td>
-                <input
-                  type="file"
-                  //value={this.props.att}
-                  onChange={e => props.handleChange('att', e)}
-                />
-              </td>
+              {props.att === '' ? (
+                <td>
+                  <UploadFile id={props.card._id} />
+                </td>
+              ) : (
+                <div>
+                  <td>
+                    <img
+                      src={props.url}
+                      alt="adb"
+                      style={{ width: '200px', height: 'auto' }}
+                    />
+                  </td>
+                  <td>
+                    <UploadFile id={props.card._id} />
+                  </td>
+                </div>
+              )}
             </tr>
           </tbody>
           <tbody>

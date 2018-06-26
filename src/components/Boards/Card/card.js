@@ -92,12 +92,20 @@ class card extends Component {
     this.toggle(e)
   }
   render() {
+    const url = `http://localhost:2000/${this.props.card.attachment}`
     return (
       <div>
         <br />
         <CardApply onClick={this.toggle}>
           <CardBody>
             <CardTitle>
+              {this.props.card.attachment === '' ? null : (
+                <img
+                  src={url}
+                  alt="adb"
+                  style={{ width: '220px', height: 'auto' }}
+                />
+              )}
               {this.props.card.cardTitle}
               <Del>
                 <ButtonApply
@@ -128,6 +136,7 @@ class card extends Component {
           com={this.state.com}
           descriptionedit={this.state.descriptionedit}
           handleEditDes={this.handleEditDes}
+          url={url}
         />
       </div>
     )

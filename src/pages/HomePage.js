@@ -7,6 +7,7 @@ import { LaneList } from '../components/Boards/Lane/laneList'
 import logo from '../images/logo.png'
 import HTML5Backend from 'react-dnd-html5-backend'
 import { DragDropContext } from 'react-dnd'
+import swal from 'sweetalert2'
 
 const Root = styled.div`
   height: 100vh;
@@ -30,8 +31,21 @@ class HomePage extends Component {
   }
 
   handleDeleteBoard = (e, id) => {
-    e.stopPropagation()
-    this.props.handleDelete(id)
+    swal({
+      title: 'Are you sure?',
+      text: 'ต้องการจะลบใช่หรือไม่!',
+      type: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!',
+    }).then(result => {
+      if (result.value) {
+        e.stopPropagation()
+        this.props.handleDelete(id)
+        swal('Deleted!', 'Your lane has been deleted.', 'success')
+      }
+    })
   }
 
   render() {
