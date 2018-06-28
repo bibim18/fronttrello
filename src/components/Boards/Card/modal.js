@@ -1,8 +1,5 @@
 import React, { Component } from 'react'
-import FontAwesomeIcon from '@fortawesome/react-fontawesome'
-import faList from '@fortawesome/fontawesome-free-solid/faList'
-import faPlusCircle from '@fortawesome/fontawesome-free-solid/faPlusCircle'
-import faUser from '@fortawesome/fontawesome-free-solid/faUser'
+import { Icon } from 'antd'
 import styled from 'styled-components'
 import {
   Button,
@@ -13,16 +10,27 @@ import {
   Table,
 } from 'reactstrap'
 import { UploadFile } from './uploadFile'
+import { Tags } from './tag'
 
 const TT = styled.div`
   font-size: 14px;
 `
-const ButtonApply = styled(Button)`
-  margin-left: 310px;
+const Tag = styled.div`
+  border-radius: 3px;
+  box-sizing: border-box;
+  display: block;
+  float: left;
+  font-size: 12px;
+  font-weight: 600;
+  height: 30px;
+  line-height: 30px;
+  margin: 0 4px 4px 0;
+  min-width: 40px;
+  padding: 0 8px;
+  width: auto;
 `
-
 export const ModalCard = props => {
-  console.log(props)
+  console.log('modal =', props)
   return (
     <Modal
       isOpen={props.modalopen}
@@ -38,8 +46,17 @@ export const ModalCard = props => {
         <Table>
           <tbody>
             <tr>
+              <td colspan="2">
+                {props.card.tag === []
+                  ? null
+                  : props.card.tag.map(tag => (
+                      <Tag style={{ background: tag }}> </Tag>
+                    ))}
+              </td>
+            </tr>
+            <tr>
               <td>
-                <FontAwesomeIcon icon={faList} /> Description
+                <Icon type="profile" /> <strong>Description</strong>
               </td>
               <td>
                 <div onClick={props.handleEditDes}>
@@ -60,11 +77,14 @@ export const ModalCard = props => {
           <tbody>
             <tr>
               <td>
-                <FontAwesomeIcon icon={faPlusCircle} /> Attachmentsy{' '}
+                <Icon type="file-add" /> <strong>Attachmentsy</strong>{' '}
               </td>
               {props.att === '' ? (
                 <td>
-                  <UploadFile id={props.card._id} />
+                  <UploadFile
+                    id={props.card._id}
+                    uploadFile={props.uploadFile}
+                  />
                 </td>
               ) : (
                 <div>
@@ -76,7 +96,10 @@ export const ModalCard = props => {
                     />
                   </td>
                   <td>
-                    <UploadFile id={props.card._id} />
+                    <UploadFile
+                      id={props.card._id}
+                      uploadFile={props.uploadFile}
+                    />
                   </td>
                 </div>
               )}
@@ -85,7 +108,7 @@ export const ModalCard = props => {
           <tbody>
             <tr>
               <td>
-                <FontAwesomeIcon icon={faUser} /> Add Comment{' '}
+                <Icon type="message" /> <strong>Add Comment</strong>{' '}
               </td>
               <td>
                 <input
@@ -97,7 +120,7 @@ export const ModalCard = props => {
             </tr>
           </tbody>
         </Table>
-        <ButtonApply>choose tag</ButtonApply>
+        <Tags getTag={props.getTag} card={props.card} />
       </ModalBody>
       <ModalFooter>
         <Button color="primary" onClick={e => props.twiceFunction(e)}>

@@ -55,9 +55,9 @@ export const delCard = (laneid, cardid) => {
   }
 }
 
-export const editCard = (id, cardTitle, description, attachment, comment) => {
+export const editCard = (id, cardTitle, description, comment) => {
   return function(dispatch) {
-    const data = { cardTitle, description, attachment, comment }
+    const data = { cardTitle, description, comment }
     axios.patch(`${apiURL}card/${id}`, data).then(response => {
       console.log(response)
       dispatch({
@@ -68,8 +68,29 @@ export const editCard = (id, cardTitle, description, attachment, comment) => {
   }
 }
 
+export const upload = (id, attachment) => {
+  return function(dispatch) {
+    console.log('action ', id, attachment)
+    dispatch({
+      type: 'UPLOAD_FILE',
+      payload: { id, attachment },
+    })
+  }
+}
+
+export const addTag = (id, tag) => {
+  return function(dispatch) {
+    const data = { tag }
+    axios.patch(`${apiURL}card/tag/${id}`, tag).then(response => {
+      dispatch({
+        type: 'ADD_TAG',
+        payload: response.data,
+      })
+    })
+  }
+}
+
 export const moveBoard = (item, allBoard) => dispatch => {
-  console.log('moveBoard Action !!')
   const boards = Array.from(allBoard)
   const startIndex = item.source.sourceIdx
   const endIndex = item.target.targetIdx
@@ -87,8 +108,6 @@ export const moveBoard = (item, allBoard) => dispatch => {
       return (card._cardid = card._id)
     })
   )
-
-  //Update Backend here
   axios.patch(`${apiURL}lane`, boards).then(res => {
     console.log('res ', res)
     dispatch({
@@ -97,3 +116,5 @@ export const moveBoard = (item, allBoard) => dispatch => {
     })
   })
 }
+
+export const moveCard = () => dispatch => {}

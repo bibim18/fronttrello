@@ -1,10 +1,9 @@
 import React, { Component } from 'react'
 import { Upload, Icon, message } from 'antd'
-import 'antd/lib/upload/style/css'
-const Dragger = Upload.Dragger
 
 export class UploadFile extends Component {
   render() {
+    const Dragger = Upload.Dragger
     const props = {
       name: 'file',
       multiple: true,
@@ -16,6 +15,7 @@ export class UploadFile extends Component {
         }
         if (status === 'done') {
           message.success(`${info.file.name} file uploaded successfully.`)
+          //this.props.uploadFile(this.props.id,info.file.name)
         } else if (status === 'error') {
           message.error(`${info.file.name} file upload failed.`)
         }

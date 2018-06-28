@@ -21,6 +21,10 @@ const homes = (state = INITIAL_STATE, action) => {
       return { ...state, boards: action.payload }
     case 'MOVE_BOARD':
       return { ...state, boards: action.payload }
+    case 'ADD_TAG':
+      return { ...state, boards: action.payload }
+    case 'UPLOAD_FILE':
+      return state
     default:
       return state //return state ตัวเดิมที่ส่งเข้ามา
   }

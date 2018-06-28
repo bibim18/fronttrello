@@ -2,10 +2,17 @@ import React, { Component } from 'react'
 import styled from 'styled-components'
 import del from '../../../images/del.png'
 import AddCard from '../Card/Addcard'
-import Card from '../Card/card'
-import { deleteBoard, delCard, editCard } from '../../../actions/homeAction'
+import Cards from '../Card/cards'
+import {
+  deleteBoard,
+  delCard,
+  editCard,
+  addTag,
+  upload,
+} from '../../../actions/homeAction'
 import { Button } from 'reactstrap'
 import { connect } from 'react-redux'
+import { Icon } from 'antd'
 
 const Square = styled.div`
   width: 270px;
@@ -60,9 +67,9 @@ class Lane extends Component {
     e.stopPropagation()
     this.props.handleDeleteCard(laneid, cardid)
   }
-  handleEdit = (e, id, title, des, att, com) => {
+  handleEdit = (e, id, title, des, com) => {
     e.stopPropagation()
-    this.props.getEdit(id, title, des, att, com)
+    this.props.getEdit(id, title, des, com)
   }
 
   render() {
@@ -74,15 +81,17 @@ class Lane extends Component {
       isDragging,
     } = this.props
 
-    const cardinfo = this.props.board.card_info.map(card => (
-      <Card
-        key={card._id}
-        card={card}
-        board={this.props.board}
-        handleDelete={this.handleDelete}
-        handleEdit={this.handleEdit}
-      />
-    ))
+    // const cardinfo = this.props.board.card_info.map(card => (
+    //   <Cards
+    //     key={card._id}
+    //     cards={this.props.board.card}
+    //     board={this.props.board}
+    //     handleDelete={this.handleDelete}
+    //     handleEdit={this.handleEdit}
+    //     getTag={this.props.getTag}
+    //     uploadFile={this.props.uploadFile}
+    //   />
+    // ))
 
     return connectDragPreview(
       connectDragSource(
@@ -92,6 +101,7 @@ class Lane extends Component {
               display: 'inline-block',
               opacity: isOver ? '0' : '1',
               margin: '20px',
+              cursor: 'pointer',
             }}
           >
             <Square>
@@ -104,11 +114,20 @@ class Lane extends Component {
                       this.props.handleDeleteBoard(e, this.props.board._id)
                     }
                   >
-                    Del
+                    <Icon type="delete" />
                   </Button>
                 </Del>
               </Header>
-              <Body>{cardinfo}</Body>
+              <Body>
+                <Cards
+                  cards={this.props.board.card_info}
+                  board={this.props.board}
+                  handleDelete={this.handleDelete}
+                  handleEdit={this.handleEdit}
+                  getTag={this.props.getTag}
+                  uploadFile={this.props.uploadFile}
+                />
+              </Body>
               <Footer>
                 {this.state.isHaveCard ? (
                   <AddCard
@@ -137,8 +156,14 @@ const mapDispatchToProps = dispatch => {
     handleDeleteCard: (laneid, cardid) => {
       dispatch(delCard(laneid, cardid))
     },
-    getEdit: (id, title, des, att, com) => {
-      dispatch(editCard(id, title, des, att, com))
+    getEdit: (id, title, des, com) => {
+      dispatch(editCard(id, title, des, com))
+    },
+    getTag: (id, tag) => {
+      dispatch(addTag(id, tag))
+    },
+    uploadFile: (id, att) => {
+      dispatch(upload(id, att))
     },
   }
 }

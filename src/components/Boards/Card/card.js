@@ -92,6 +92,7 @@ class card extends Component {
     this.toggle(e)
   }
   render() {
+    console.log('props in card ', this.props)
     const url = `http://localhost:2000/${this.props.card.attachment}`
     return (
       <div>
@@ -137,6 +138,8 @@ class card extends Component {
           descriptionedit={this.state.descriptionedit}
           handleEditDes={this.handleEditDes}
           url={url}
+          getTag={this.props.getTag}
+          uploadFile={this.props.uploadFile}
         />
       </div>
     )
