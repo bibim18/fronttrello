@@ -51,6 +51,15 @@ const ButtonApply = styled(Button)`
     background-color: #8c8e9a !important;
   }
 `
+const Tag = styled.div`
+  height: 10px;
+  line-height: 16px;
+  padding: 0 8px;
+  min-width: 40px;
+  display: inline-block;
+  border-radius: 4px;
+  margin: 4px;
+`
 
 class card extends Component {
   constructor(props) {
@@ -94,6 +103,7 @@ class card extends Component {
   render() {
     const { connectDragSource, connectDropTarget } = this.props
     const url = `http://localhost:2000/${this.props.card.attachment}`
+    console.log('props in card ', this.props)
     return connectDragSource(
       connectDropTarget(
         <div style={{ marginTop: '5px' }}>
@@ -107,7 +117,14 @@ class card extends Component {
                     style={{ width: '220px', height: 'auto' }}
                   />
                 )}
-                {this.props.card.cardTitle}
+                {this.props.card.tag === []
+                  ? null
+                  : this.props.card.tag.map(CardTag => (
+                      <Tag style={{ background: CardTag }} />
+                    ))}
+                <div style={{ margin: '5px 0 0 5px' }}>
+                  {this.props.card.cardTitle}
+                </div>
                 <Del>
                   <ButtonApply
                     onClick={e =>

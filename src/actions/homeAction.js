@@ -92,12 +92,9 @@ export const upload = (id, attachment) => {
 export const addTag = (id, tag) => {
   return function(dispatch) {
     const data = { tag }
-    axios.patch(`${apiURL}card/tag/${id}`, tag).then(response => {
-      dispatch({
-        type: 'ADD_TAG',
-        payload: response.data,
-      })
-    })
+    axios
+      .patch(`${apiURL}card/tag/${id}`, tag)
+      .then(res => sortIndex(res, 'ADD_TAG', dispatch))
   }
 }
 
