@@ -13,7 +13,7 @@ const Square = styled.div`
   border-radius: 3px;
   padding-top: 10px;
   padding-bottom: 10px;
-  padding-left: 5px;
+  padding-left: 20px;
   margin-top: 20px;
   vertical-align: top;
 `
@@ -25,6 +25,8 @@ const Header = styled.div`
 `
 const CardWrapper = styled.div`
   white-space: nowrap;
+  overflow-x: auto;
+  min-height: calc(100vh - 90px);
 `
 class LaneList extends Component {
   state = {

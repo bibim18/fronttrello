@@ -27,10 +27,9 @@ const Square = styled.div`
 const Body = styled.article`
   width: 245px;
   background-color: #e2e4e6;
-  top: 110px;
-  max-height: 700px;
-  margin-left: 15px;
-  overflow-y: scroll;
+  max-height: calc(100vh - 400px);
+  margin: 0 15px;
+  overflow-y: auto;
   overflow-x: hidden;
 `
 
