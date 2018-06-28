@@ -15,8 +15,17 @@ export const addBoard = text => {
 
 export const showBoard = () => {
   return function(dispatch) {
-    axios.get(`${apiURL}lane`).then(response => {
-      dispatch({ type: 'SHOW_BOARD', payload: response.data })
+    axios.get(`${apiURL}lane`).then(res => {
+      console.log('res ', res)
+      let da = res.data
+      da.map(d => {
+        return d.card_info.sort((a, b) => a.index - b.index)
+      })
+
+      dispatch({
+        type: 'SHOW_BOARD',
+        payload: da,
+      })
     })
   }
 }
@@ -179,8 +188,8 @@ export const moveCard = (item, allBoard) => dispatch => {
       lane: boards,
     }
 
-    console.log('New board anotherlane', Arraycard)
-    console.log('New board anotherlane b', boards)
+    console.log('New board anotherlane', data)
+
     axios.patch(`${apiURL}lane/cards`, data).then(res => {
       console.log('res ', res)
       let da = res.data
@@ -201,30 +210,24 @@ export const attachToBoard = (item, allBoard) => dispatch => {
   const boards = Array.from(allBoard)
   const startIndex = item.source.sourceIdx
   const endIndex = item.target.targetIdx
-  const sbIndex = boards.findIndex(b => b._id === item.source.sourceBoard)
-  const tbIndex = boards.findIndex(b => b._id === item.target.targetBoard)
+  const sbIndex = boards.findIndex(b => b.id === item.source.sourceBoard)
+  const tbIndex = boards.findIndex(b => b.id === item.target.targetBoard)
 
-  console.log(sbIndex, tbIndex)
+  console.log(boards, startIndex, endIndex, sbIndex, tbIndex)
 
   const [removed] = boards[sbIndex].card_info.splice(startIndex, 1)
   boards[tbIndex].card_info.push(removed)
 
   boards.map(b => {
     b.card_info.map((c, idx) => {
-      ;(c.index = idx), (c._cardid = c._id)
+      c.index = idx
     })
   })
 
-  axios.patch(`${apiURL}lane/`, boards).then(res => {
-    console.log('res ', res)
-    let da = res.data
-    da.map(d => {
-      return d.card_info.sort((a, b) => a.index - b.index)
-    })
+  console.log('NewBoards =', boards)
 
-    dispatch({
-      type: 'MOVE_CARD',
-      payload: da,
-    })
+  dispatch({
+    type: 'MOVE_CARD',
+    payload: boards,
   })
 }
