@@ -210,8 +210,8 @@ export const attachToBoard = (item, allBoard) => dispatch => {
   const boards = Array.from(allBoard)
   const startIndex = item.source.sourceIdx
   const endIndex = item.target.targetIdx
-  const sbIndex = boards.findIndex(b => b.id === item.source.sourceBoard)
-  const tbIndex = boards.findIndex(b => b.id === item.target.targetBoard)
+  const sbIndex = boards.findIndex(b => b._id === item.source.sourceBoard)
+  const tbIndex = boards.findIndex(b => b._id === item.target.targetBoard)
 
   console.log(boards, startIndex, endIndex, sbIndex, tbIndex)
 
@@ -221,13 +221,20 @@ export const attachToBoard = (item, allBoard) => dispatch => {
   boards.map(b => {
     b.card_info.map((c, idx) => {
       c.index = idx
+      c._cardid = c._id
     })
   })
 
-  console.log('NewBoards =', boards)
+  axios.patch(`${apiURL}lane/`, boards).then(res => {
+    console.log('res ', res)
+    let da = res.data
+    da.map(d => {
+      return d.card_info.sort((a, b) => a.index - b.index)
+    })
 
-  dispatch({
-    type: 'MOVE_CARD',
-    payload: boards,
+    dispatch({
+      type: 'MOVE_CARD',
+      payload: da,
+    })
   })
 }
