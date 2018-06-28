@@ -39,6 +39,9 @@ const Header = styled.header`
   height: 35px;
   text-align: center;
   margin-top: 10px;
+  display: inline-block
+  font-size: 18px;
+  font-weight: bold;
 `
 const Footer = styled.footer`
   margin-top: 10px
@@ -81,25 +84,13 @@ class Lane extends Component {
       isDragging,
     } = this.props
 
-    // const cardinfo = this.props.board.card_info.map(card => (
-    //   <Cards
-    //     key={card._id}
-    //     cards={this.props.board.card}
-    //     board={this.props.board}
-    //     handleDelete={this.handleDelete}
-    //     handleEdit={this.handleEdit}
-    //     getTag={this.props.getTag}
-    //     uploadFile={this.props.uploadFile}
-    //   />
-    // ))
-
     return connectDragPreview(
       connectDragSource(
         connectDropTarget(
           <div
             style={{
               display: 'inline-block',
-              opacity: isOver ? '0' : '1',
+              opacity: isOver ? '0.5' : '1',
               margin: '20px',
               cursor: 'pointer',
             }}

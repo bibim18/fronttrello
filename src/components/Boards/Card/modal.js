@@ -30,7 +30,6 @@ const Tag = styled.div`
   width: auto;
 `
 export const ModalCard = props => {
-  console.log('modal =', props)
   return (
     <Modal
       isOpen={props.modalopen}

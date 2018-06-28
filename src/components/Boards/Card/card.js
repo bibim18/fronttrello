@@ -92,56 +92,56 @@ class card extends Component {
     this.toggle(e)
   }
   render() {
-    console.log('props in card ', this.props)
+    const { connectDragSource, connectDropTarget } = this.props
     const url = `http://localhost:2000/${this.props.card.attachment}`
-    return (
-      <div>
-        <br />
-        <CardApply onClick={this.toggle}>
-          <CardBody>
-            <CardTitle>
-              {this.props.card.attachment === '' ? null : (
-                <img
-                  src={url}
-                  alt="adb"
-                  style={{ width: '220px', height: 'auto' }}
-                />
-              )}
-              {this.props.card.cardTitle}
-              <Del>
-                <ButtonApply
-                  onClick={e =>
-                    this.props.handleDelete(
-                      e,
-                      this.props.board._id,
-                      this.props.card._id
-                    )
-                  }
-                >
-                  X
-                </ButtonApply>
-              </Del>
-            </CardTitle>
-          </CardBody>
-        </CardApply>
-
-        <ModalCard
-          card={this.props.card}
-          board={this.props.board}
-          handleChange={this.handleChange}
-          toggle={this.toggle}
-          twiceFunction={this.twiceFunction}
-          modalopen={this.state.modal}
-          des={this.state.des}
-          att={this.state.att}
-          com={this.state.com}
-          descriptionedit={this.state.descriptionedit}
-          handleEditDes={this.handleEditDes}
-          url={url}
-          getTag={this.props.getTag}
-          uploadFile={this.props.uploadFile}
-        />
-      </div>
+    return connectDragSource(
+      connectDropTarget(
+        <div style={{ marginTop: '5px' }}>
+          <CardApply onClick={this.toggle}>
+            <CardBody>
+              <CardTitle>
+                {this.props.card.attachment === '' ? null : (
+                  <img
+                    src={url}
+                    alt="adb"
+                    style={{ width: '220px', height: 'auto' }}
+                  />
+                )}
+                {this.props.card.cardTitle}
+                <Del>
+                  <ButtonApply
+                    onClick={e =>
+                      this.props.handleDelete(
+                        e,
+                        this.props.board._id,
+                        this.props.card._id
+                      )
+                    }
+                  >
+                    X
+                  </ButtonApply>
+                </Del>
+              </CardTitle>
+            </CardBody>
+          </CardApply>
+          <ModalCard
+            card={this.props.card}
+            board={this.props.board}
+            handleChange={this.handleChange}
+            toggle={this.toggle}
+            twiceFunction={this.twiceFunction}
+            modalopen={this.state.modal}
+            des={this.state.des}
+            att={this.state.att}
+            com={this.state.com}
+            descriptionedit={this.state.descriptionedit}
+            handleEditDes={this.handleEditDes}
+            url={url}
+            getTag={this.props.getTag}
+            uploadFile={this.props.uploadFile}
+          />
+        </div>
+      )
     )
   }
 }

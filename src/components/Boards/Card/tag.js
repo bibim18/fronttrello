@@ -25,8 +25,6 @@ const StyledTag = styled(Tag)`
 export class Tags extends Component {
   constructor(props) {
     super(props)
-    console.log('props =', props)
-
     this.toggle = this.toggle.bind(this)
     this.state = {
       popoverOpen: false,
@@ -52,10 +50,6 @@ export class Tags extends Component {
 
   render() {
     const { selectedTags } = this.state
-    console.log('props tag ', this.props)
-
-    console.log('state tag ', this.state)
-
     return (
       <div>
         <ButtonApply id="Popover1" onClick={this.toggle}>

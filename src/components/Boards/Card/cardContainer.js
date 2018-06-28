@@ -9,12 +9,13 @@ import { moveCard } from '../../../actions/homeAction'
 const cardSource = {
   beginDrag(props, component) {
     console.log('cardSource =', props)
-    // const item = {
-    //   id: props.card.id,
-    //   title: props.card.title,
-    //   index: props.index,
-    // }
-    // return item
+    const item = {
+      id: props.card._id,
+      title: props.card.cardTitle,
+      index: props.index,
+      boardId: props.board._id,
+    }
+    return item
   },
   isDragging(props, monitor) {
     return props.id === monitor.getItem().id
@@ -23,26 +24,30 @@ const cardSource = {
 
 const cardTarget = {
   drop(targetProps, monitor, component) {
-    // const targetId = targetProps.card.id
-    // const targetIdx = targetProps.index
-    // const sourceProps = monitor.getItem()
-    // const sourceId = sourceProps.id
-    // const sourceType = monitor.getItemType()
-    // const sourceIdx = sourceProps.index
-    // const item = {
-    //   source: {
-    //     sourceId,
-    //     sourceIdx,
-    //   },
-    //   target: {
-    //     targetId,
-    //     targetIdx,
-    //   },
-    // }
-    // if (targetId !== sourceId && sourceType === 'CARD') {
-    //   console.log('item =', item)
-    //   targetProps.onMoveCard(item, targetProps.allBoard)
-    // }
+    const targetId = targetProps.card._id
+    const targetIdx = targetProps.index
+    const sourceProps = monitor.getItem()
+    const sourceId = sourceProps.id
+    const sourceType = monitor.getItemType()
+    const sourceIdx = sourceProps.index
+    const sourceBoard = sourceProps.boardId
+    const targetBoard = targetProps.board._id
+
+    const item = {
+      source: {
+        sourceId,
+        sourceIdx,
+        sourceBoard,
+      },
+      target: {
+        targetId,
+        targetIdx,
+        targetBoard,
+      },
+    }
+    if (targetId !== sourceId && sourceType === 'CARD') {
+      targetProps.onMoveCard(item, targetProps.allBoard)
+    }
   },
 }
 
@@ -58,13 +63,13 @@ const collectDropTarget = (DnDconnect, monitor) => ({
 })
 
 const mapStateToProps = state => ({
-  // allBoard: state.boards.board,
+  allBoard: state.homes.boards,
 })
 
 const mapDispatchToProps = dispatch => ({
-  // onMoveCard(item, allBoard) {
-  //   dispatch(moveCard(item, allBoard))
-  // },
+  onMoveCard(item, allBoard) {
+    dispatch(moveCard(item, allBoard))
+  },
 })
 
 export default connect(

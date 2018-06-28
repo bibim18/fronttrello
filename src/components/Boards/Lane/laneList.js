@@ -14,7 +14,7 @@ const Square = styled.div`
   padding-top: 10px;
   padding-bottom: 10px;
   padding-left: 5px;
-  margin-top: 10px;
+  margin-top: 20px;
   vertical-align: top;
 `
 const Header = styled.div`

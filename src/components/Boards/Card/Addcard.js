@@ -3,7 +3,6 @@ import { connect } from 'react-redux'
 import { addCard } from '../../../actions/homeAction'
 import { Button } from 'reactstrap'
 
-//const AddCard = (props) => {
 class AddCard extends Component {
   state = {
     cardName: '',
@@ -18,7 +17,6 @@ class AddCard extends Component {
     this.setState({ isHaveCard: false })
   }
   render() {
-    console.log('props in addcard ', this.props)
     return (
       <div align="center">
         <input
