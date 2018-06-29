@@ -40,11 +40,13 @@ const CardApply = styled(Card)`
       border-color: #cfd3eb;
     }
   }
+  height: 50px;
 `
 const ButtonApply = styled(Button)`
   color: #fff;
   background-color: #fff;
   border-color: #fff;
+  margin-top: -35px;
   &:hover {
     color: #fff !important;
     border-color: #fff !important;
@@ -114,7 +116,7 @@ class card extends Component {
                   <img
                     src={url}
                     alt="adb"
-                    style={{ width: '220px', height: 'auto' }}
+                    style={{ width: '220px', height: '50px !important' }}
                   />
                 )}
                 {this.props.card.tag === []
