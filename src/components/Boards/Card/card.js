@@ -40,7 +40,6 @@ const CardApply = styled(Card)`
       border-color: #cfd3eb;
     }
   }
-  height: 50px;
 `
 const ButtonApply = styled(Button)`
   color: #fff;
@@ -105,7 +104,6 @@ class card extends Component {
   render() {
     const { connectDragSource, connectDropTarget } = this.props
     const url = `http://localhost:2000/${this.props.card.attachment}`
-    console.log('props in card ', this.props)
     return connectDragSource(
       connectDropTarget(
         <div style={{ marginTop: '5px' }}>

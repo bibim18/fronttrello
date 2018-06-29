@@ -12,7 +12,7 @@ import {
 import { UploadFile } from './uploadFile'
 import { Tags } from './tag'
 
-const TT = styled.div`
+const StyleTitle = styled.div`
   font-size: 14px;
 `
 const Tag = styled.div`
@@ -39,7 +39,7 @@ export const ModalCard = props => {
     >
       <ModalHeader toggle={e => props.toggle(e)}>
         {props.card.cardTitle}
-        <TT>in list {props.board.title}</TT>
+        <StyleTitle>in list {props.board.title}</StyleTitle>
       </ModalHeader>
       <ModalBody>
         <Table>

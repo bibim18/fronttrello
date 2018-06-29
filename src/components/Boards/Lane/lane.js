@@ -35,7 +35,7 @@ const Body = styled.article`
 
 const Header = styled.header`
   width: 270px;
-  height: 35px;
+  height: 40px;
   text-align: center;
   margin-top: 10px;
   display: inline-block
@@ -90,7 +90,7 @@ class Lane extends Component {
             style={{
               display: 'inline-block',
               opacity: isOver ? '0.5' : '1',
-              margin: '20px',
+              margin: '19px 5px 0 13px',
               cursor: 'pointer',
             }}
           >

@@ -8,7 +8,6 @@ import { moveCard } from '../../../actions/homeAction'
 
 const cardSource = {
   beginDrag(props, component) {
-    console.log('cardSource =', props)
     const item = {
       id: props.card._id,
       title: props.card.cardTitle,
